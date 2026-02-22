@@ -1,34 +1,71 @@
-# React + Vite + Tailwind CSS + Biome
+# React + Vite + Tailwind CSS + Biome + AppKit
 
-一个最小化的 React Vite 启动模板：
+A minimal React Vite starter with Tailwind CSS, Biome, and Reown AppKit wallet connect.
 
-- Tailwind CSS 通过 Vite 官方插件集成（无需额外 PostCSS 配置）
-- Biome 统一负责格式化与代码检查
-- TypeScript + React + Vite
+## What's Included
 
-## 开发
+- Tailwind CSS via the official Vite plugin (no PostCSS config needed)
+- Biome for formatting and linting
+- Reown AppKit + Wagmi + Viem wallet connect
+- TypeScript + React 19 + Vite
+
+## Getting Started
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-## 构建
+## Build & Preview
 
 ```bash
 pnpm build
 pnpm preview
 ```
 
-## 代码质量
+## Code Quality
 
 ```bash
 pnpm lint
 pnpm format
 ```
 
-## 目录说明
+## Environment Variables
 
-- `src/index.css` 使用 `@import "tailwindcss";`
-- `vite.config.ts` 已启用 `@tailwindcss/vite`
-- `biome.json` 为 Biome 默认推荐配置
+Create a `.env` file and add your Reown project id:
+
+```bash
+VITE_REOWN_PROJECT_ID=YOUR_PROJECT_ID
+```
+
+You can copy from `.env.example`.
+
+## AppKit Notes
+
+- AppKit is initialized in `src/lib/appkit.ts`.
+- The app is wrapped with `AppKitProvider` in `src/main.tsx`.
+- The connect button uses `AppKitButton` on the home page.
+
+### RPC (optional)
+
+If balance or RPC calls fail, you can provide your own RPCs in `src/lib/appkit.ts`:
+
+```ts
+import { http } from "viem"
+
+export const wagmiAdapter = new WagmiAdapter({
+  networks,
+  projectId,
+  transports: {
+    [mainnet.id]: http("https://eth.llamarpc.com"),
+    [arbitrum.id]: http("https://arbitrum.llamarpc.com"),
+  },
+})
+```
+
+## Project Structure
+
+- `src/index.css` uses `@import "tailwindcss";`
+- `vite.config.ts` enables `@tailwindcss/vite`
+- `biome.json` provides the default Biome config
+- `src/lib/appkit.ts` sets up AppKit + Wagmi
